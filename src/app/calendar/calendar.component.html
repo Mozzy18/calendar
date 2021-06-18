@@ -1,0 +1,49 @@
+<header class="head">
+  <div class="logo">
+    <img src="../../assets/tottenham.png" alt="">
+  </div>
+  <div class="label">Tottenham Hotspur</div>
+  <div class="menu"> <a routerLink="" a>Main Page</a></div>
+  <div class="calendar"> <a routerLink="calendar">Calendar 2021/2022</a> </div>
+</header>
+
+
+<div>
+  <div class="month">
+    {{displayMonth}}
+  </div>
+  <div>
+    <input class="inpBtn" type="button" (click)="setCurrentMonth()" value="today" />
+    <input class="inpBtn" type="button" (click)="decreaseMonth()" value="-" />
+    <input class="inpBtn" type="button" (click)="increaseMonth()" value="+" />
+  </div>
+</div>
+
+<table class='calendar-table' *ngIf="calendar">
+  <thead>
+    <tr>
+      <th>Понедельник</th>
+      <th>Вторник</th>
+      <th>Среда</th>
+      <th>Четверг</th>
+      <th>Пятница</th>
+      <th>Суббота</th>
+      <th>Воскресенье</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of calendar | chunk: 7; let i = index">
+      <td class="calendar-day" [ngClass]="{'past-date': c.isPastDate, 'today': c.isToday}"
+        *ngFor="let c of row; let j = index" (click)='popup($event)'>
+        <div class="calendar-day-header" [ngClass]="{'blue-date': c.isToday}"><strong>{{c.date.getDate()}}</strong>
+          <strong *ngIf="c.isToday || (i==0 && j==0) || (c.date.getDate() == 1)">
+            {{monthNames[c.date.getMonth()]}}</strong></div>
+        <div id="pop" *ngIf="test">
+          <p>{{namesDay[j]}}</p>
+          <p>{{monthNames[c.date.getMonth()]}}</p>
+          <div class="btn" (click)='close()'></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
